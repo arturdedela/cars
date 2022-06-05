@@ -7,7 +7,7 @@ export default {
   component: Button,
 } as Meta<ButtonProps>;
 
-const Template: Story<ButtonProps> = (args) => <Button {...args}>Click</Button>;
+const Template: Story<ButtonProps> = (args) => <Button {...args}>Save</Button>;
 //#EA7F29
 export const Primary = Template.bind({});
 Primary.args = {
