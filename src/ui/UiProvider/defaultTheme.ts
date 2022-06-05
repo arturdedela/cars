@@ -28,10 +28,21 @@ export const DEFAULT_THEME = createTheme({
   palette: {
     primary: {
       main: '#EA7F28',
+      dark: '#D37324',
       contrastText: '#FFF',
     },
     text: {
       primary: '#4A4A4A',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          minWidth: 128,
+          height: 32,
+        },
+      },
     },
   },
 });
