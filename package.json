@@ -31,7 +31,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "gen-api-types": "npx openapi-typescript https://auto1-mock-server.herokuapp.com/swagger.json --output ./src/api/schema.ts"
   },
   "eslintConfig": {
     "extends": [
