@@ -1,5 +1,6 @@
 import React from 'react';
 import { UiProvider } from '../src/ui';
+import { MemoryRouter } from 'react-router-dom';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -13,8 +14,10 @@ export const parameters = {
 
 export const decorators = [
   (Story) => (
-    <UiProvider>
-      <Story />
-    </UiProvider>
-  )
+    <MemoryRouter>
+      <UiProvider>
+        <Story />
+      </UiProvider>
+    </MemoryRouter>
+  ),
 ];
