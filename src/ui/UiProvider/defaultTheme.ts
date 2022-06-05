@@ -35,6 +35,7 @@ export const DEFAULT_THEME = createTheme({
       primary: '#4A4A4A',
     },
   },
+  spacing: [0, 8, 12, 24],
   components: {
     MuiButton: {
       styleOverrides: {

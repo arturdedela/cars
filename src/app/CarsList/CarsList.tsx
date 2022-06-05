@@ -1,5 +1,6 @@
 import React from 'react';
 import { Schema } from '../../api';
+import CarCard from '../CarCard';
 
 export interface CarsListProps {
   cars: Schema['Car'][];
@@ -9,9 +10,7 @@ const CarsList: React.FC<CarsListProps> = ({ cars }) => {
   return (
     <>
       {cars.map((car) => (
-        <div key={car.stockNumber}>
-          {car.manufacturerName} | {car.modelName}
-        </div>
+        <CarCard key={car.stockNumber} car={car} />
       ))}
     </>
   );

@@ -41,7 +41,7 @@ export interface AppBarProps {
 const AppBar: React.FC<AppBarProps> = ({ logo, links }) => {
   return (
     <MuiAppBar position="static" color="transparent" sx={{ height: 80, justifyContent: 'center' }}>
-      <Container maxWidth="xl">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Logo src={logo} alt="logo" />
 
