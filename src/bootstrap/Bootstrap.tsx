@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { UiProvider } from '../ui';
+import { ApiProvider } from '../api';
 
 export interface BootstrapProps {}
 
@@ -8,7 +9,9 @@ export interface BootstrapProps {}
 const Bootstrap: React.FC<PropsWithChildren<BootstrapProps>> = ({ children }) => {
   return (
     <BrowserRouter>
-      <UiProvider>{children}</UiProvider>
+      <ApiProvider>
+        <UiProvider>{children}</UiProvider>
+      </ApiProvider>
     </BrowserRouter>
   );
 };

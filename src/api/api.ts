@@ -1,6 +1,6 @@
 // https://github.com/drwpow/openapi-typescript#openapi-typescript-fetch
 import { Fetcher } from 'openapi-typescript-fetch';
-import { paths } from './schema';
+import { paths } from './schema.generated';
 
 const fetcher = Fetcher.for<paths>();
 
