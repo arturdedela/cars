@@ -1,13 +1,12 @@
 import React from 'react';
-import { Box, Grid, Paper, styled, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { Schema } from '../../api';
 import { Link, Image } from '../../ui';
+import CarDetails from '../CarDetails';
 
 export interface CarCardProps {
   car: Schema['Car'];
 }
-
-const Capitalize = styled('span')({ textTransform: 'capitalize' });
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
   return (
@@ -21,10 +20,7 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
             {car.manufacturerName} {car.modelName}
           </Typography>
           <Box my={1}>
-            <Typography variant="body2">
-              Stock # {car.stockNumber} - {car.mileage?.number?.toString().match(/\d{3}/g)?.join('.')}{' '}
-              {car.mileage?.unit} - {car.fuelType} - <Capitalize>{car.color}</Capitalize>
-            </Typography>
+            <CarDetails variant="body2" car={car} />
           </Box>
           <Link to={`/cars/${car.stockNumber}`}>View details</Link>
         </Grid>
