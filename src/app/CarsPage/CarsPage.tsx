@@ -39,6 +39,7 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
             </>
           ) : (
             <>
+              {/*TODO: Upgrade skeleton*/}
               <Skeleton variant="text" />
               {new Array(10).fill(0).map((_, i) => (
                 <Skeleton variant="rectangular" height={106} key={i} />

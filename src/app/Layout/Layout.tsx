@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from 'react';
-import { AppBar } from '../../ui';
+import { AppBar, Footer } from '../../ui';
 import Logo from '../../assets/logo.png';
+import { styled } from '@mui/material';
 
 export interface LayoutProps {}
 
@@ -10,12 +11,19 @@ const LINKS = [
   { path: '/sell', label: 'Sell' },
 ];
 
+const LayoutRoot = styled('div')({
+  minHeight: '100vh',
+  display: 'flex',
+  flexDirection: 'column',
+});
+
 const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
   return (
-    <>
+    <LayoutRoot>
       <AppBar logo={Logo} links={LINKS} />
       {children}
-    </>
+      <Footer />
+    </LayoutRoot>
   );
 };
 
