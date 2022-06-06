@@ -1,6 +1,6 @@
 import { Container, AppBar as MuiAppBar, Toolbar, styled } from '@mui/material';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link as RouterLink } from 'react-router-dom';
 
 const Logo = styled('img')({
   width: 175,
@@ -35,15 +35,18 @@ interface AppBarLink {
 
 export interface AppBarProps {
   logo: string;
+  logoUrl?: string;
   links: AppBarLink[];
 }
 
-const AppBar: React.FC<AppBarProps> = ({ logo, links }) => {
+const AppBar: React.FC<AppBarProps> = ({ logo, logoUrl = '/', links }) => {
   return (
     <MuiAppBar position="static" color="transparent" sx={{ height: 80, justifyContent: 'center' }}>
       <Container maxWidth="lg">
         <Toolbar disableGutters>
-          <Logo src={logo} alt="logo" />
+          <RouterLink to={logoUrl}>
+            <Logo src={logo} alt="logo" />
+          </RouterLink>
 
           <Nav>
             {links.map((link, i) => (

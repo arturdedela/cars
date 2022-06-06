@@ -20,7 +20,7 @@ const LayoutRoot = styled('div')({
 const Layout: React.FC<PropsWithChildren<LayoutProps>> = ({ children }) => {
   return (
     <LayoutRoot>
-      <AppBar logo={Logo} links={LINKS} />
+      <AppBar logo={Logo} logoUrl={'/cars'} links={LINKS} />
       {children}
       <Footer />
     </LayoutRoot>
