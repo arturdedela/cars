@@ -24,7 +24,13 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
           <Typography variant="body2" my={1}>
             {car ? <CarDetails car={car} /> : <Skeleton />}
           </Typography>
-          {car ? <Link to={`/cars/${car.stockNumber}`}>View details</Link> : <Skeleton />}
+          {car ? (
+            <Typography variant="body2">
+              <Link to={`/cars/${car.stockNumber}`}>View details</Link>
+            </Typography>
+          ) : (
+            <Skeleton />
+          )}
         </Grid>
       </Grid>
     </Paper>
