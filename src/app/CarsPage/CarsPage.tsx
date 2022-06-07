@@ -1,32 +1,53 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { Container, Grid, Skeleton, Typography } from '@mui/material';
+import { Box, Container, Grid, Skeleton, Typography } from '@mui/material';
 import { getCars } from '../../api';
 import CarsFilters from '../CarsFilters';
-import { useCarsFiltersState } from './useCarsFiltersState';
 import CarCard from '../CarCard';
+import { Pagination } from '../../ui';
+import { useSearchParams } from 'react-router-dom';
 
 export interface CarsPageProps {}
 
 const CarsPage: React.FC<CarsPageProps> = ({}) => {
-  const { filters, changeFilter } = useCarsFiltersState();
   const [sort, setSort] = useState();
-  // TODO: Pagination
-  // TODO: Error Handling
+  const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
+  const currentPage = searchParams.get('page');
+  const color = searchParams.get('color') || undefined;
+  const manufacturer = searchParams.get('manufacturer') || undefined;
+
   const { data } = useQuery(
-    ['cars', filters, sort],
-    (context) => getCars({ page: context.pageParam, ...filters, sort }),
+    ['cars', color, manufacturer, sort, currentPage],
+    () => getCars({ page: Number(currentPage), color, manufacturer, sort }),
     { keepPreviousData: true },
   );
 
-  let cars = data?.data.cars;
+  const handleChangePage = (page: number) => {
+    setSearchParams({ ...Object.fromEntries(searchParams.entries()), page: page.toString() });
+  };
+
+  const changeFilter = (name: string, value: string = '') => {
+    if (!value) {
+      searchParams.delete(name);
+    } else {
+      searchParams.set(name, value);
+    }
+
+    setSearchParams({
+      ...Object.fromEntries(searchParams.entries()),
+      page: '1',
+    });
+  };
+
+  const cars = data?.data.cars;
+  const totalPageCount = data?.data.totalPageCount;
   const totalCarsCount = data?.data.totalCarsCount;
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 3 }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4} lg={3}>
-          <CarsFilters filters={filters} onChange={changeFilter} />
+          <CarsFilters filters={{ color, manufacturer }} onChange={changeFilter} />
         </Grid>
         <Grid item xs={12} md={8} lg={9} sx={{ '& > * + *': { marginTop: 2 } }}>
           <Typography variant="h2">Available cars</Typography>
@@ -47,6 +68,16 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
               ))}
             </>
           )}
+
+          <Box py={3} mt={0}>
+            {currentPage && totalPageCount && (
+              <Pagination
+                currentPage={Number(currentPage)}
+                totalPages={totalPageCount}
+                onChangePage={handleChangePage}
+              />
+            )}
+          </Box>
         </Grid>
       </Grid>
     </Container>
