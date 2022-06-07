@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { Box, Container, Grid, Skeleton, Typography } from '@mui/material';
 import { getCars } from '../../api';
@@ -9,12 +9,17 @@ import { useSearchParams } from 'react-router-dom';
 
 export interface CarsPageProps {}
 
+function isValidSort(sort?: string): sort is 'asc' | 'des' {
+  return Boolean(sort && ['asc', 'des'].includes(sort));
+}
+
 const CarsPage: React.FC<CarsPageProps> = ({}) => {
-  const [sort, setSort] = useState();
   const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
   const currentPage = searchParams.get('page');
   const color = searchParams.get('color') || undefined;
   const manufacturer = searchParams.get('manufacturer') || undefined;
+  const rawSort = searchParams.get('sort') || undefined;
+  const sort = isValidSort(rawSort) ? rawSort : undefined;
 
   const { data } = useQuery(
     ['cars', color, manufacturer, sort, currentPage],
@@ -47,7 +52,7 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
     <Container maxWidth="lg" sx={{ marginTop: 3 }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4} lg={3}>
-          <CarsFilters filters={{ color, manufacturer }} onChange={changeFilter} />
+          <CarsFilters filters={{ color, manufacturer, sort }} onChange={changeFilter} />
         </Grid>
         <Grid item xs={12} md={8} lg={9} sx={{ '& > * + *': { marginTop: 2 } }}>
           <Typography variant="h2">Available cars</Typography>
