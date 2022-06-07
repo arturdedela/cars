@@ -3,7 +3,9 @@ import { Skeleton, styled } from '@mui/material';
 
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {}
 
-const Img = styled('img')<{ isReady: boolean }>(({ isReady }) => ({
+const Img = styled('img', {
+  shouldForwardProp: (propName: PropertyKey) => propName !== 'isReady',
+})<{ isReady: boolean }>(({ isReady }) => ({
   display: isReady ? 'block' : 'none',
 }));
 
