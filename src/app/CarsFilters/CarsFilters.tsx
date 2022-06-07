@@ -1,4 +1,4 @@
-import { Box, Paper } from '@mui/material';
+import { Box, Paper, SxProps, Theme } from '@mui/material';
 import React from 'react';
 import FilterSelect from './FilterSelect';
 import { getColors, getManufacturers } from '../../api';
@@ -10,13 +10,14 @@ interface Filters {
 }
 
 export interface CarsFiltersProps {
+  sx?: SxProps<Theme>;
   filters: Filters;
   onChange: <TKey extends keyof Filters>(filterName: TKey, value: Filters[TKey]) => void;
 }
 
-const CarsFilters: React.FC<CarsFiltersProps> = ({ filters, onChange }) => {
+const CarsFilters: React.FC<CarsFiltersProps> = ({ filters, onChange, sx }) => {
   return (
-    <Paper sx={{ padding: 3 }}>
+    <Paper sx={{ padding: 3, ...sx }}>
       <Box>
         <FilterSelect
           label="Color"

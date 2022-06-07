@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { Box, Container, Grid, Skeleton, Typography } from '@mui/material';
+import { Box, Container, Grid, Skeleton, Typography, Hidden } from '@mui/material';
 import { getCars } from '../../api';
 import CarsFilters from '../CarsFilters';
 import CarCard from '../CarCard';
@@ -48,19 +48,30 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
   const totalPageCount = data?.data.totalPageCount;
   const totalCarsCount = data?.data.totalCarsCount;
 
+  const pagination = currentPage && totalPageCount && (
+    <Pagination currentPage={Number(currentPage)} totalPages={totalPageCount} onChangePage={handleChangePage} />
+  );
+
   return (
     <Container maxWidth="lg" sx={{ marginTop: 3 }}>
       <Grid container spacing={3}>
         <Grid item xs={12} md={4} lg={3}>
-          <CarsFilters filters={{ color, manufacturer, sort }} onChange={changeFilter} />
+          <CarsFilters
+            filters={{ color, manufacturer, sort }}
+            onChange={changeFilter}
+            sx={{ position: 'sticky', top: 24 }}
+          />
         </Grid>
         <Grid item xs={12} md={8} lg={9} sx={{ '& > * + *': { marginTop: 2 } }}>
           <Typography variant="h2">Available cars</Typography>
           {cars ? (
             <>
-              <Typography variant="body1">
-                Showing {cars.length} of {totalCarsCount} results
-              </Typography>
+              <Box display="flex" justifyContent="space-between">
+                <Typography variant="body1">
+                  Showing {cars.length} of {totalCarsCount} results
+                </Typography>
+                <Hidden mdDown>{pagination}</Hidden>
+              </Box>
               {cars.map((car) => (
                 <CarCard key={car.stockNumber} car={car} />
               ))}
@@ -75,13 +86,7 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
           )}
 
           <Box py={3} mt={0}>
-            {currentPage && totalPageCount && (
-              <Pagination
-                currentPage={Number(currentPage)}
-                totalPages={totalPageCount}
-                onChangePage={handleChangePage}
-              />
-            )}
+            {pagination}
           </Box>
         </Grid>
       </Grid>
