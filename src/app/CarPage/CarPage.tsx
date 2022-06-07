@@ -52,7 +52,9 @@ const CarPage: React.FC<CarPageProps> = () => {
               {car.manufacturerName} {car.modelName}
             </Typography>
             <Box my={1}>
-              <CarDetails variant="body1" car={car} />
+              <Typography variant="body1">
+                <CarDetails car={car} />
+              </Typography>
             </Box>
             <Typography variant="body2">
               This car is currently available and can be delivered as soon as tomorrow morning. Please be aware of that

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
-import { CircularProgress, Container, Grid, Skeleton, Typography } from '@mui/material';
+import { Container, Grid, Skeleton, Typography } from '@mui/material';
 import { getCars } from '../../api';
-import CarsList from '../CarsList';
 import CarsFilters from '../CarsFilters';
 import { useCarsFiltersState } from './useCarsFiltersState';
+import CarCard from '../CarCard';
 
 export interface CarsPageProps {}
 
@@ -19,7 +19,7 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
     { keepPreviousData: true },
   );
 
-  const cars = data?.data.cars;
+  let cars = data?.data.cars;
   const totalCarsCount = data?.data.totalCarsCount;
 
   return (
@@ -35,14 +35,15 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
               <Typography variant="body1">
                 Showing {cars.length} of {totalCarsCount} results
               </Typography>
-              <CarsList cars={cars} />
+              {cars.map((car) => (
+                <CarCard key={car.stockNumber} car={car} />
+              ))}
             </>
           ) : (
             <>
-              {/*TODO: Upgrade skeleton*/}
               <Skeleton variant="text" />
               {new Array(10).fill(0).map((_, i) => (
-                <Skeleton variant="rectangular" height={106} key={i} />
+                <CarCard key={i} />
               ))}
             </>
           )}
