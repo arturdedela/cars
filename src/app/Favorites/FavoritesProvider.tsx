@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { FavoritesContext } from './FavoritesContext';
 import { Schema } from '../../api';
 
-const FAVORITES_STORAGE_KEY = 'FAVORITES_CARS';
+export const FAVORITES_STORAGE_KEY = 'FAVORITES_CARS';
 
 type FavoritesState<TFavorite> = Record<string | number, TFavorite | null>;
 
