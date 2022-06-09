@@ -13,7 +13,7 @@ function isValidSort(sort?: string): sort is 'asc' | 'des' {
   return Boolean(sort && ['asc', 'des'].includes(sort));
 }
 
-const CarsPage: React.FC<CarsPageProps> = ({}) => {
+const CarsPage: React.FC<CarsPageProps> = () => {
   const [searchParams, setSearchParams] = useSearchParams({ page: '1' });
   const currentPage = searchParams.get('page');
   const color = searchParams.get('color') || undefined;
@@ -78,7 +78,7 @@ const CarsPage: React.FC<CarsPageProps> = ({}) => {
             </>
           ) : (
             <>
-              <Skeleton variant="text" />
+              <Skeleton variant="text" sx={{ marginTop: 2 }} />
               {new Array(10).fill(0).map((_, i) => (
                 <CarCard key={i} />
               ))}
