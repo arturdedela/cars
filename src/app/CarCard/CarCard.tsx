@@ -1,16 +1,19 @@
 import React from 'react';
 import { Grid, Paper, Skeleton, Typography } from '@mui/material';
 import { Schema } from '../../api';
-import { Link, Image } from '../../ui';
+import { Link, Image, FavoriteButton } from '../../ui';
 import CarDetails from '../CarDetails';
+import { useFavorites } from '../Favorites';
 
 export interface CarCardProps {
   car?: Schema['Car'];
 }
 
 const CarCard: React.FC<CarCardProps> = ({ car }) => {
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
+
   return (
-    <Paper sx={{ padding: 2, border: 1, borderColor: '#EDEDED' }} elevation={0}>
+    <Paper sx={{ padding: 2, border: 1, borderColor: '#EDEDED', position: 'relative' }} elevation={0}>
       <Grid container spacing={3}>
         <Grid item>
           {car ? (
@@ -33,6 +36,13 @@ const CarCard: React.FC<CarCardProps> = ({ car }) => {
           )}
         </Grid>
       </Grid>
+      {car && (
+        <FavoriteButton
+          sx={{ position: 'absolute', bottom: 5, right: 5 }}
+          isFavorite={isFavorite(car.stockNumber!)}
+          onClick={(favorite) => (favorite ? removeFavorite(car.stockNumber!) : addFavorite(car))}
+        />
+      )}
     </Paper>
   );
 };

@@ -6,11 +6,13 @@ import { useQuery } from 'react-query';
 import { getCarByStockNumber } from '../../api';
 import CarDetails from '../CarDetails';
 import { Image } from '../../ui';
+import { useFavorites } from '../Favorites';
 
 export interface CarPageProps {}
 
 const CarPage: React.FC<CarPageProps> = () => {
   const { carId } = useParams<'carId'>();
+  const { isFavorite, addFavorite, removeFavorite } = useFavorites();
 
   const carStockNumber = Number(carId);
   const isValidStockNumber = !isNaN(carStockNumber);
@@ -67,8 +69,12 @@ const CarPage: React.FC<CarPageProps> = () => {
                 If you like this car, click the button and save it in your collection of favourite items
               </Typography>
               <Box mt={2} textAlign="right">
-                <Button variant="contained" color="primary">
-                  Save
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => (isFavorite(car.stockNumber!) ? removeFavorite(car.stockNumber!) : addFavorite(car))}
+                >
+                  {isFavorite(car.stockNumber!) ? 'Remove' : 'Save'}
                 </Button>
               </Box>
             </Paper>

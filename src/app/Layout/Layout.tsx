@@ -7,7 +7,7 @@ export interface LayoutProps {}
 
 const LINKS = [
   { path: '/cars', label: 'Purchase' },
-  { path: '/orders', label: 'My Orders' },
+  { path: '/favorites', label: 'Favorites' },
   { path: '/sell', label: 'Sell' },
 ];
 
